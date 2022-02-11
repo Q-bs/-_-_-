@@ -29,7 +29,28 @@ namespace Курсовой_проект_Бикжанов.Pages
             id_pers = ID_Person;
             InitializeComponent();
             Сounting_Progress();
-        }        
+            Info_Prof();
+        }
+
+        private string Info_Prof()
+        {
+            try
+            {
+                string ConString = ConfigurationManager.ConnectionStrings["ConString"].ConnectionString;
+                using (SqlConnection cn = new SqlConnection(ConString))
+                {
+                    cn.Open();
+                    SqlCommand sqlCommand = new SqlCommand("use [Курсовой_Бикжанов] select Name_Pers, Surname_Pers from dbo.Persons where dbo.Persons.ID_person = " + id_pers.ToString() + "", cn);
+                    SqlDataReader sqlData = sqlCommand.ExecuteReader();
+                    if (sqlData.Read())
+                    {
+                        Name_pers.Text = sqlData.GetString(0);
+                        Surname_pers.Text = sqlData.GetString(1);
+                    }
+                }
+            } catch { MessageBox.Show("Ошибка базы данных(7)"); }
+            return null;
+        }
 
         private string Сounting_Progress()
         {

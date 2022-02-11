@@ -193,7 +193,7 @@
             <Grid x:Name="SlideMenuBtn">
                 <StackPanel Orientation="Vertical">
                     <Button Template="{StaticResource ResourceKey=SlideMenuBtn}" Content="Введение" Click="Test_1_Click"/>
-                    <Button Template="{StaticResource ResourceKey=SlideMenuBtn}" Content="Общее формальное описание">
+                    <Button Template="{StaticResource ResourceKey=SlideMenuBtn}" Content="Общее формальное описание" Click="Test_2_Click">
                         <Button.ToolTip>
                             <ToolTip Background="#363636" Height="50" Width="auto" FontWeight="SemiBold" FontSize="12" Foreground="WhiteSmoke"
                                      HasDropShadow="False">

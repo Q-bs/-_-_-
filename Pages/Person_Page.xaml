@@ -5,11 +5,19 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Курсовой_проект_Бикжанов.Pages"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="600" d:DesignWidth="1000"
       Title="Person_Page">
 
     <Grid>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center"
+                    Margin="0,0,0,350">
+            <TextBlock x:Name="Name_pers" Foreground="WhiteSmoke" FontSize="50" Margin="20,0"/>
+            <TextBlock x:Name="Surname_pers" Foreground="WhiteSmoke" FontSize="50" Margin="20,0"/>
+        </StackPanel>
+
+        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="50"
+                   Margin="0,0,0,150" Text="Ваш прогресс состовляет:" Foreground="WhiteSmoke"/>
         <TextBlock x:Name="Res" HorizontalAlignment="Center" VerticalAlignment="Center"
-                   FontSize="100" Foreground="WhiteSmoke"/>
+                   FontSize="80" Foreground="WhiteSmoke" Text="60%" Margin="0,100,0,0"/>
     </Grid>
 </Page>

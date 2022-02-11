@@ -26,13 +26,17 @@ namespace Курсовой_проект_Бикжанов.Pages
         int id_topic, id_pers, id_quests;
         int Cours_res = 0;
         string truetext, textSaved;
-        public Test_Page(Frame frame, int IDPerson)
+        public Test_Page(Frame frame, int IDPerson, int ID_topic)
         {
-            id_topic = 1;
+            id_topic = ID_topic;          
             MyFrame = frame;
             id_pers = IDPerson;                
             InitializeComponent();
             List(id_pers);         
+            if (infoText.Text == null)
+            {
+                Restart_Btn.Visibility = Visibility.Visible;
+            }
         }
         private void List(int id_Person)
         {
@@ -40,12 +44,13 @@ namespace Курсовой_проект_Бикжанов.Pages
             using (SqlConnection cn = new SqlConnection(ConString))
             {
                 cn.Open();
-                SqlCommand sqlCommand = new SqlCommand("use [Курсовой_Бикжанов] select TOP(1) dbo.Quests.ID_qests, dbo.Quests.Text_quests from dbo.Table_topic inner join dbo.Quests ON dbo.Table_topic.ID_topic = dbo.Quests.ID_topic full join dbo.Course_result ON dbo.Course_result.ID_qests = dbo.Quests.ID_qests where ((ID_person = " + id_Person.ToString() + " and dbo.Course_result.Course_result = " + Cours_res.ToString() + " ) OR dbo.Course_result.Course_result is NULL) AND dbo.Quests.ID_topic = " + id_topic.ToString() + " group by dbo.Quests.ID_qests,dbo.Quests.Text_quests ORDER BY NEWID()", cn);
+                SqlCommand sqlCommand = new SqlCommand("use [Курсовой_Бикжанов] select TOP(1) dbo.Quests.ID_qests, dbo.Quests.Text_quests, dbo.Table_topic.Name_topic from dbo.Table_topic inner join dbo.Quests ON dbo.Table_topic.ID_topic = dbo.Quests.ID_topic full join dbo.Course_result ON dbo.Course_result.ID_qests = dbo.Quests.ID_qests where ((ID_person = " + id_Person.ToString() + " and dbo.Course_result.Course_result = " + Cours_res.ToString() + " ) OR dbo.Course_result.Course_result is NULL) AND dbo.Quests.ID_topic = " + id_topic.ToString() + " group by dbo.Quests.ID_qests,dbo.Quests.Text_quests, dbo.Table_topic.Name_topic ORDER BY NEWID()", cn);
                 SqlDataReader sqlData = sqlCommand.ExecuteReader();
                 if (sqlData.Read())
                 {
                     id_quests = sqlData.GetInt32(0);                    
                     infoText.Text = sqlData.GetString(1);
+                    Oglav.Text = sqlData.GetString(2);
                     AnswerOptions(id_quests);
                 }
             }          
@@ -55,6 +60,11 @@ namespace Курсовой_проект_Бикжанов.Pages
         {
             id_topic = 1;
             List(id_pers);          
+        }
+        private void Test_2_Click(object sender, RoutedEventArgs e)
+        {
+            id_topic = 2;
+            List(id_pers);
         }
         private void Test_3_Click(object sender, RoutedEventArgs e)
         {
@@ -72,9 +82,9 @@ namespace Курсовой_проект_Бикжанов.Pages
             if (textSaved.CompareTo(truetext) == 0)
             {
                 Save_Result(id_quests, id_pers);
-                MyFrame.Navigate(new Result_test_Page(MyFrame, id_topic, id_pers, true));
+                MyFrame.Navigate(new Result_test_Page(MyFrame, id_topic, id_quests, id_pers, true));
             }
-            else { MyFrame.Navigate(new Result_test_Page(MyFrame, id_topic, id_pers, false)); }
+            else { MyFrame.Navigate(new Result_test_Page(MyFrame, id_topic, id_quests, id_pers, false)); }
         }
 
         private void AnswerOptions(int id_quests)
@@ -136,7 +146,7 @@ namespace Курсовой_проект_Бикжанов.Pages
 
         private void Btn_1_Click(object sender, RoutedEventArgs e)
         {
-            textSaved = Txt_1.Text;
+            textSaved = Txt_1.Text;           
         }
         private void Btn_2_Click(object sender, RoutedEventArgs e)
         {

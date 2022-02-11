@@ -23,10 +23,12 @@ namespace Курсовой_проект_Бикжанов.Pages
     public partial class Main_Page : Page
     {
         readonly int IDpers;
+        readonly int ID_toipc = 1;
         public Main_Page(int IDPerson)
         {
             IDpers = IDPerson;
             InitializeComponent();
+            MyFrame.Navigate(new Lesson_Page(IDpers));
         }
 
         private void Exit_Click(object sender, RoutedEventArgs e)
@@ -41,7 +43,7 @@ namespace Курсовой_проект_Бикжанов.Pages
 
         private void Test_Click(object sender, RoutedEventArgs e)
         {
-            MyFrame.Navigate(new Test_Page(MyFrame,IDpers));
+            MyFrame.Navigate(new Test_Page(MyFrame, IDpers, ID_toipc));
         }
 
         private void Person_Click(object sender, RoutedEventArgs e)
